@@ -1,45 +1,42 @@
+import { ServerWebSocket } from "bun";
 import { Hono } from "hono";
 import { createBunWebSocket } from "hono/bun";
-import type { ServerWebSocket } from "bun";
 import { router } from "./routes/router";
-
-const { upgradeWebSocket, websocket } = createBunWebSocket();
 
 const app = new Hono();
 
-const clients = new Set<ServerWebSocket>();
+const { upgradeWebSocket, websocket } = createBunWebSocket<ServerWebSocket>();
 
 app.route("/api/v1", router);
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
+const server = Bun.serve({
+  port: 8888,
+  fetch: app.fetch,
+  websocket,
 });
 
-app.get("/ws", async (c) => {
-  const upgrade = upgradeWebSocket((c) => {
-    let intervalId: Timer;
-    return {
-      onOpen(_event, ws) {
-        intervalId = setInterval(() => {
-          ws.send(new Date().toString());
-        }, 200);
-      },
-      onClose() {
-        clearInterval(intervalId);
-      },
-    };
-  });
-
-  if (!upgrade) {
-    return c.json(
-      {
-        data: { message: "Upgrade required" },
-        status: "error",
-      },
-      426
-    );
-  }
+app.get("/", async (c) => {
+  return c.json({ data: { message: "Hello World" } });
 });
+
+app.get(
+  "/ws",
+  upgradeWebSocket((_) => ({
+    onOpen(_, ws) {
+      ws.send("Hello from server!");
+    },
+    onClose(_, ws) {
+      console.log("Connection closed");
+    },
+    onMessage(event, ws) {
+      if (event.data === "ping") {
+        ws.send("pong");
+      } else {
+        ws.send("echo: " + event.data);
+      }
+    },
+  }))
+);
 
 export default {
   port: 8888,
