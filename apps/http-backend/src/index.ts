@@ -1,8 +1,8 @@
-import { Hono } from "hono";
-
 import dotenv from "dotenv";
-import { router } from "./routes/router";
 dotenv.config();
+
+import { Hono } from "hono";
+import { router } from "./routes/router";
 
 const app = new Hono();
 
