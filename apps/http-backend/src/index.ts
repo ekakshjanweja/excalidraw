@@ -1,16 +1,16 @@
 import dotenv from "dotenv";
-dotenv.config();
-
 import { Hono } from "hono";
-import { router } from "./routes/router";
+import { router } from "./v1/routes/router";
+import { API_BASE, loadEnv } from "./config/config";
+
+dotenv.config();
+loadEnv();
 
 const app = new Hono();
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
-});
+app.use(`${API_BASE}/*`);
 
-app.route("/api/v1", router);
+app.route(API_BASE, router);
 
 export default {
   port: 8080,
