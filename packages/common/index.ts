@@ -1,5 +1,5 @@
-import { getErrorTypeMessage, ERROR_TYPE } from "../enums/error-type";
-import { STATUS } from "../enums/status";
+import { getErrorTypeMessage, type ERROR_TYPE } from "./enums/error_type";
+import { STATUS } from "./enums/status";
 
 export interface ApiResponse<T = "unknown"> {
   data: T;

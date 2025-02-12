@@ -1,8 +1,8 @@
 import { Context, Next } from "hono";
-import { API_BASE, JWT_SECRET } from "../../config/config";
-import { errorResponse } from "../utils/api-response";
-import { ERROR_TYPE } from "../enums/error-type";
 import { jwt } from "hono/jwt";
+import { API_BASE, JWT_SECRET } from "@repo/common/config/config";
+import { errorResponse } from "@repo/common";
+import { ERROR_TYPE } from "@repo/common/enums/error_type";
 
 export const authMiddleware = async (c: Context, next: Next) => {
   if (c.req.path.startsWith(`${API_BASE}/auth`)) {
