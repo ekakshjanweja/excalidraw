@@ -5,10 +5,12 @@
     "start": "bun run src/index.ts"
   },
   "dependencies": {
-    "hono": "^4.6.20",
-    "@repo/typescript-config": "workspace:*"
+    "@repo/typescript-config": "workspace:*",
+    "authenticator": "^1.1.5",
+    "hono": "^4.6.20"
   },
   "devDependencies": {
+    "@types/authenticator": "^1.1.4",
     "@types/bun": "latest"
   }
 }
