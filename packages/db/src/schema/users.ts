@@ -8,7 +8,7 @@ export const users = pgTable("users", {
   email: text("email").unique().notNull(),
   password: text("password").notNull(),
   name: text("name").notNull(),
-  photo: text("photo").notNull(),
+  photo: text("photo"),
 });
 
 export const userRelations = relations(users, ({ many }) => ({
