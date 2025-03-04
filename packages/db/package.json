@@ -9,7 +9,7 @@
     "visualizer": "bun run drizzle-lab visualizer"
   },
   "exports": {
-    ".": "./src/index.ts"
+    "./client": "./src/index.ts"
   },
   "devDependencies": {
     "@repo/typescript-config": "*",
