@@ -24,3 +24,6 @@ export const chatsRelations = relations(chats, ({ one }) => ({
     references: [users.id],
   }),
 }));
+
+export type ChatsSelect = typeof chats.$inferSelect;
+export type ChatsInsert = typeof chats.$inferInsert;

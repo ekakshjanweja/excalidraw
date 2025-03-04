@@ -20,5 +20,5 @@ export const roomsRelations = relations(rooms, ({ one, many }) => ({
   chats: many(chats),
 }));
 
-export const RoomsSelect = typeof rooms.$inferSelect;
-export const RoomsInsert = typeof rooms.$inferInsert;
+export type RoomsSelect = typeof rooms.$inferSelect;
+export type RoomsInsert = typeof rooms.$inferInsert;

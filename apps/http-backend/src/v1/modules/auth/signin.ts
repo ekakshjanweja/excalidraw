@@ -1,6 +1,6 @@
+import { errorResponse, successResponse } from "@repo/common";
+import { ERROR_TYPE } from "@repo/common/enums/error_type";
 import { Hono } from "hono";
-import { errorResponse, successResponse } from "../../utils/api-response";
-import { ERROR_TYPE } from "../../enums/error-type";
 
 export const signinRouter = new Hono();
 
@@ -10,7 +10,7 @@ signinRouter.post("/", async (c) => {
   const email = body.email as string;
   const password = body.password as string;
 
-  const existingUser = "Temporary user"; //DB Call
+  const existingUser = "Temporary user"; 
 
   if (!existingUser) {
     return c.json(errorResponse(ERROR_TYPE.USER_NOT_FOUND), 404);

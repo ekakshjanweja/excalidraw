@@ -5,7 +5,8 @@
     "start": "bun run src/index.ts"
   },
   "dependencies": {
-    "@repo/typescript-config": "workspace:*",
+    "@repo/typescript-config": "*",
+    "@repo/db": "*",
     "authenticator": "^1.1.5",
     "hono": "^4.6.20"
   },
