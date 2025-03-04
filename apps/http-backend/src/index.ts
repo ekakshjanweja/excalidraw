@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 import { Hono } from "hono";
 import { router } from "./v1/routes/router";
-import { API_BASE, loadEnv } from "./config/config";
-import { authMiddleware } from "./middlewares/auth";
+import { API_BASE, loadEnv } from "@repo/common";
+import { authMiddleware } from "./v1/middlewares/auth";
 
 dotenv.config();
 loadEnv();

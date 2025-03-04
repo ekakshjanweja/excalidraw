@@ -1,6 +1,7 @@
-import { errorResponse, successResponse } from "@repo/common";
-import { ERROR_TYPE } from "@repo/common/enums/error_type";
+import { ERROR_TYPE, errorResponse, successResponse } from "@repo/common";
+import { db, users } from "@repo/db";
 import { Hono } from "hono";
+import { eq } from "drizzle-orm";
 
 export const signinRouter = new Hono();
 
@@ -10,7 +11,10 @@ signinRouter.post("/", async (c) => {
   const email = body.email as string;
   const password = body.password as string;
 
-  const existingUser = "Temporary user"; 
+  const existingUser = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email));
 
   if (!existingUser) {
     return c.json(errorResponse(ERROR_TYPE.USER_NOT_FOUND), 404);

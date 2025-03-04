@@ -1,30 +1,47 @@
-import { errorResponse, successResponse } from "@repo/common";
-import { ERROR_TYPE } from "@repo/common/enums/error_type";
 import { db, users } from "@repo/db";
 import { Hono } from "hono";
 import { eq } from "drizzle-orm";
+import { CreateUserSchema } from "@repo/common/types";
+import { ERROR_TYPE, errorResponse, successResponse } from "@repo/common";
 
 export const signupRouter = new Hono();
 
 signupRouter.post("/", async (c) => {
   const body = await c.req.json();
 
-  const email = body.email as string;
-  const password = body.password as string;
+  const safeParse = CreateUserSchema.safeParse(body);
+
+  if (!safeParse.success) {
+    return c.json(errorResponse(ERROR_TYPE.INVALID_REQUEST), 400);
+  }
 
   const existingUser = await db
     .select()
     .from(users)
-    .where(eq(users.email, email));
+    .where(eq(users.email, safeParse.data.email));
 
   if (existingUser) {
     return c.json(errorResponse(ERROR_TYPE.USER_ALREADY_EXISTS), 400);
   }
 
-  // Create a new user in the database
-  // Generate a token and return it
+  try {
+    const user = (await db.insert(users).values(safeParse.data).returning())[0];
 
-  const user = "Temporary user";
+    if (!user) {
+      return c.json(
+        errorResponse(
+          ERROR_TYPE.INTERNAL_SERVER_ERROR,
+          "User not found! Error creating a new user"
+        ),
+        500
+      );
+    }
 
-  return c.json(successResponse({ user }), 200);
+    return c.json(successResponse({ user }), 200);
+  } catch (error) {
+    return c.json(
+      errorResponse(ERROR_TYPE.INTERNAL_SERVER_ERROR, error as string),
+      500
+    );
+  }
 });
