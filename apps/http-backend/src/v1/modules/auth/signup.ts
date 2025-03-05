@@ -15,10 +15,9 @@ signupRouter.post("/", async (c) => {
     return c.json(errorResponse(ERROR_TYPE.INVALID_REQUEST), 400);
   }
 
-  const existingUser = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, safeParse.data.email));
+  const existingUser = (
+    await db.select().from(users).where(eq(users.email, safeParse.data.email))
+  )[0];
 
   if (existingUser) {
     return c.json(errorResponse(ERROR_TYPE.USER_ALREADY_EXISTS), 400);
