@@ -5,6 +5,7 @@ export enum ERROR_TYPE {
   USER_NOT_FOUND,
   INVALID_REQUEST,
   INTERNAL_SERVER_ERROR,
+  ROOM_ALREADY_EXISTS,
 }
 
 export function getErrorTypeId(errorType: ERROR_TYPE): string {
@@ -21,6 +22,8 @@ export function getErrorTypeId(errorType: ERROR_TYPE): string {
       return "INVALID_REQUEST";
     case ERROR_TYPE.INTERNAL_SERVER_ERROR:
       return "INTERNAL_SERVER_ERROR";
+    case ERROR_TYPE.ROOM_ALREADY_EXISTS:
+      return "ROOM_ALREADY_EXISTS";
   }
 }
 
@@ -45,6 +48,8 @@ export function getErrorTypeMessage(
       return "Invalid request";
     case ERROR_TYPE.INTERNAL_SERVER_ERROR:
       return "Internal server error";
+    case ERROR_TYPE.ROOM_ALREADY_EXISTS:
+      return "Room already exists";
     default:
       return "Unknown error";
   }

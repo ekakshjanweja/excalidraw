@@ -12,8 +12,9 @@ import { z } from "zod";
 export const CreateUserSchema: z.ZodType<UserInsert> =
   createInsertSchema(users);
 
-export const CreateRoomSchema: z.ZodType<RoomsInsert> =
-  createInsertSchema(rooms);
+export const CreateRoomSchema = z.object({
+  slug: z.string(),
+});
 
 export const CreateChatSchema: z.ZodType<ChatsInsert> =
   createInsertSchema(chats);
