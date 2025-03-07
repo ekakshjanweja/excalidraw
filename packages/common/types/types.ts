@@ -17,3 +17,8 @@ export const CreateRoomSchema: z.ZodType<RoomsInsert> =
 
 export const CreateChatSchema: z.ZodType<ChatsInsert> =
   createInsertSchema(chats);
+
+export const SignInSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
