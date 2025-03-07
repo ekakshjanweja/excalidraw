@@ -12,13 +12,23 @@ export const authMiddleware = async (c: Context, next: Next) => {
     const authHeader = c.req.header("Authorization");
 
     if (!authHeader) {
-      return c.json(errorResponse(ERROR_TYPE.UNAUTHORIZED), 401);
+      return c.json(
+        errorResponse({
+          error: ERROR_TYPE.UNAUTHORIZED,
+        }),
+        401
+      );
     }
 
     const jwtMiddleware = jwt({ secret: JWT_SECRET! });
 
     return await jwtMiddleware(c, next);
   } catch (error) {
-    return c.json(errorResponse(ERROR_TYPE.UNAUTHORIZED), 401);
+    return c.json(
+      errorResponse({
+        error: ERROR_TYPE.UNAUTHORIZED,
+      }),
+      401
+    );
   }
 };

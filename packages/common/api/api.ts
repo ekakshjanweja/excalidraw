@@ -17,10 +17,13 @@ export function successResponse<T>(data: T): ApiResponse<T> {
   };
 }
 
-export function errorResponse(
-  error: ERROR_TYPE,
-  message?: string
-): ApiResponse<{
+export function errorResponse({
+  error,
+  message,
+}: {
+  error: ERROR_TYPE;
+  message?: string;
+}): ApiResponse<{
   error: string;
   message: string;
 }> {

@@ -12,7 +12,7 @@ signupRouter.post("/", async (c) => {
   const safeParse = CreateUserSchema.safeParse(body);
 
   if (!safeParse.success) {
-    return c.json(errorResponse(ERROR_TYPE.INVALID_REQUEST), 400);
+    return c.json(errorResponse({ error: ERROR_TYPE.INVALID_REQUEST }), 400);
   }
 
   const existingUser = (
@@ -20,7 +20,10 @@ signupRouter.post("/", async (c) => {
   )[0];
 
   if (existingUser) {
-    return c.json(errorResponse(ERROR_TYPE.USER_ALREADY_EXISTS), 400);
+    return c.json(
+      errorResponse({ error: ERROR_TYPE.USER_ALREADY_EXISTS }),
+      400
+    );
   }
 
   try {
@@ -28,10 +31,10 @@ signupRouter.post("/", async (c) => {
 
     if (!user) {
       return c.json(
-        errorResponse(
-          ERROR_TYPE.INTERNAL_SERVER_ERROR,
-          "User not found! Error creating a new user"
-        ),
+        errorResponse({
+          error: ERROR_TYPE.INTERNAL_SERVER_ERROR,
+          message: "User not found! Error creating a new user",
+        }),
         500
       );
     }
@@ -39,7 +42,10 @@ signupRouter.post("/", async (c) => {
     return c.json(successResponse({ user }), 200);
   } catch (error) {
     return c.json(
-      errorResponse(ERROR_TYPE.INTERNAL_SERVER_ERROR, error as string),
+      errorResponse({
+        error: ERROR_TYPE.INTERNAL_SERVER_ERROR,
+        message: error as string,
+      }),
       500
     );
   }

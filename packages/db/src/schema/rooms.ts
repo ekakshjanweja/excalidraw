@@ -6,7 +6,7 @@ import { chats } from "./chats";
 export const rooms = pgTable("rooms", {
   id: serial("id").primaryKey(),
   slug: text("slug").unique().notNull(),
-  createdAt: timestamp("created_at").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
   adminId: uuid("admin_id")
     .notNull()
     .references(() => users.id),

@@ -18,7 +18,7 @@ signinRouter.post("/", async (c) => {
   const safeParse = SignInSchema.safeParse(body);
 
   if (!safeParse.success) {
-    return c.json(errorResponse(ERROR_TYPE.INVALID_REQUEST), 400);
+    return c.json(errorResponse({ error: ERROR_TYPE.INVALID_REQUEST }), 400);
   }
 
   const existingUser = (
@@ -26,7 +26,7 @@ signinRouter.post("/", async (c) => {
   )[0];
 
   if (!existingUser) {
-    return c.json(errorResponse(ERROR_TYPE.USER_NOT_FOUND), 404);
+    return c.json(errorResponse({ error: ERROR_TYPE.USER_NOT_FOUND }), 404);
   }
 
   const payload = {
