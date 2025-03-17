@@ -21,8 +21,7 @@ app.get("/", async (c) => {
 app.get(
   "/ws",
   upgradeWebSocket((c) => {
-    const accessToken = c.req.header("Authorization");
-    console.log("Access Token:", accessToken);
+    const payload = c.get("jwtPayload");
 
     return {
       onOpen(_, ws) {

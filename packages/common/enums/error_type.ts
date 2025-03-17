@@ -6,6 +6,7 @@ export enum ERROR_TYPE {
   INVALID_REQUEST,
   INTERNAL_SERVER_ERROR,
   ROOM_ALREADY_EXISTS,
+  AUTH_HEADER_NOT_FOUND,
 }
 
 export function getErrorTypeId(errorType: ERROR_TYPE): string {
@@ -24,6 +25,8 @@ export function getErrorTypeId(errorType: ERROR_TYPE): string {
       return "INTERNAL_SERVER_ERROR";
     case ERROR_TYPE.ROOM_ALREADY_EXISTS:
       return "ROOM_ALREADY_EXISTS";
+    case ERROR_TYPE.AUTH_HEADER_NOT_FOUND:
+      return "AUTH_HEADER_NOT_FOUND";
   }
 }
 
@@ -50,6 +53,8 @@ export function getErrorTypeMessage(
       return "Internal server error";
     case ERROR_TYPE.ROOM_ALREADY_EXISTS:
       return "Room already exists";
+    case ERROR_TYPE.AUTH_HEADER_NOT_FOUND:
+      return "Authorization header not found";
     default:
       return "Unknown error";
   }
